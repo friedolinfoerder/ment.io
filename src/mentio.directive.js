@@ -247,7 +247,6 @@ angular.module('mentio', [])
                 scope.triggerCharMap = {};
 
                 scope.targetElement = element;
-                attrs.$set('autocomplete','off');
 
                 if (attrs.mentioItems) {
                     scope.localItems = [];
@@ -536,7 +535,7 @@ angular.module('mentio', [])
                 };
             },
 
-            link: function (scope, element) {
+            link: function (scope, element, attrs) {
                 element[0].parentNode.removeChild(element[0]);
                 $document[0].body.appendChild(element[0]);
                 scope.menuElement = element; // for testing
@@ -576,6 +575,7 @@ angular.module('mentio', [])
                     if (items && items.length > 0) {
                         scope.activate(items[0]);
                         if (!scope.visible && scope.requestVisiblePendingSearch) {
+                            attrs.$set('autocomplete', 'off');
                             scope.visible = true;
                             scope.requestVisiblePendingSearch = false;
                         }
@@ -599,6 +599,7 @@ angular.module('mentio', [])
                 });
 
                 scope.hideMenu = function () {
+                    attrs.$set('autocomplete', 'on');
                     scope.visible = false;
                     element.css('display', 'none');
                 };
